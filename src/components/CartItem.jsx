@@ -5,11 +5,11 @@ export default function CartItem({ item }) {
     useCart();
 
   return (
-    <div className="cart-item">
+    <div className={`cart-item ${item.selected ? "active" : ""}`}>
       {/* checkbox */}
       <input
         type="checkbox"
-        checked={item.selected}
+        checked={item.selected ?? true}
         onChange={() => toggleSelect(item.id)}
       />
 

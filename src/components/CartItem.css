@@ -1,0 +1,4 @@
+.cart-item.active {
+  border: 2px solid #ff4d4f;
+  background: #fff7f7;
+}

@@ -161,7 +161,9 @@ export function CartProvider({ children }) {
         const price = normalizePrice(item.price);
 
         acc.totalQty += item.quantity;
-        acc.totalPrice += item.quantity * price;
+        if (item.selected) {
+          acc.totalPrice += item.quantity * price;
+        }
 
         return acc;
       },

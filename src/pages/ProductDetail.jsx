@@ -6,12 +6,10 @@ import "./ProductDetail.css";
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const { addToCart, formatPrice } = useCart();
 
-  // 👉 tìm sản phẩm
   const product = products.find((p) => p.id === Number(id));
 
-  // 👉 fallback
   if (!product) {
     return (
       <div className="container">
@@ -21,7 +19,6 @@ export default function ProductDetail() {
     );
   }
 
-  // 👉 handler rõ ràng
   const handleAddToCart = () => {
     addToCart(product);
   };
@@ -38,17 +35,47 @@ export default function ProductDetail() {
         <div className="right">
           <h1 className="title">{product.name}</h1>
 
-          <p className="price">{product.price}</p>
+          <p className="price">
+            {formatPrice ? formatPrice(product.price) : product.price}
+          </p>
 
           <p className="desc">{product.desc}</p>
 
+          {/* ✅ THÔNG SỐ */}
+          <div className="specs">
+            <h3>Thông số kỹ thuật:</h3>
+            <ul>
+              {product.specs?.map((s, i) => (
+                <li key={i}>✔ {s}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* ✅ BẢO HÀNH */}
+          <p className="meta">✔ Bảo hành: {product.warranty}</p>
+
+          <p className="meta">
+            ✔ Tình trạng: {product.stock ? "Còn hàng" : "Hết hàng"}
+          </p>
+
+          {/* ACTION */}
           <div className="actions">
             <button className="btn" onClick={handleAddToCart}>
-              Mua ngay
+              🛒 Thêm vào giỏ
             </button>
 
+            {/* 🔥 NÚT BÁN THẬT */}
+            <a
+              href="https://zalo.me/YOUR_SDT"
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn-buy"
+            >
+              📞 Mua / Tư vấn ngay
+            </a>
+
             <button className="btn btn-back" onClick={() => navigate("/")}>
-              ← Tư vấn sản phẩm
+              ← Quay lại
             </button>
           </div>
         </div>
